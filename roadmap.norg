@@ -1,0 +1,34 @@
+@document.meta
+title: roadmap
+description: implementation strategy for this nushell configuration.
+authors: ursa-major
+categories:
+created: 2025-04-08T11:46:58-0700
+updated: 2025-04-08T11:46:58-0700
+version: 1.1.1
+@end
+
+* *nightowl.nu*
+  This document contains a small whishlist of features along with a general
+  sense of how to go about implementing them.
+
+  ---
+
+* Transitioning to JJ
+  `Jujutsu` is a new-era version control system that claims to have improved
+  upon previous models by selecting the most ideal features from past version
+  control softwares (e.g. `git`) in a straightforward though probably
+  opinionated manner.
+
+  The impetus for this is to become more familiar with this style of working as
+  I think it probably will make me better at keeping my documentations up to
+  snuff.
+** [ ] Create new local repository for nushell files
+** [ ] Move files piecemeal over from previous repository
+** [ ]  Create new remote repository and add to the local repo's remotes
+
+   ---
+
+* `mmm` model manager module
+** TODO: rename to `mm`?
+   This is namely just to make the invocation easier
