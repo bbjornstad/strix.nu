@@ -1,14 +1,14 @@
 #!/usr/bin/env nu
 # vim: set ft=nu:
 
-export module aliases/cd.nu
+export module ./cd.nu
 
-export module aliases/dnvim.nu
+export module ./dnvim.nu
 
-export module aliases/lsd.nu
+export module ./lsd.nu
 
-export module aliases/sman.nu
+export module ./sman.nu
 
-export module aliases/yay.nu
+export module ./yay.nu
 
-export module aliases/dirlij.nu
+export module ./dirlij.nu

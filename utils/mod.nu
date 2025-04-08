@@ -1,9 +1,9 @@
-export module utils/ghb.nu
+export module ./ghb.nu
 
-export module utils/mnt.nu
+export module ./mnt.nu
 
-export module utils/gi.nu
+export module ./gi.nu
 
-export module utils/disp.nu
+export module ./disp.nu
 
-export module utils/mmm.nu
+export module ./mmm.nu
