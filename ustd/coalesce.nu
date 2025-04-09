@@ -1,12 +1,16 @@
 export def main [
-    ...$args: any
+    ...args: any
     --predicate: closure
-] {
+]: [nothing -> any list<any> -> any] {
+    let pipein = $in
+    let fullargs = ($args | default [])
+    | prepend ($pipein | default [])
+
     let testargs = (
         if $predicate != null {
-            $args | filter $predicate
+            $fullargs | filter $predicate
         } else {
-            $args
+            $fullargs
         }
     )
 

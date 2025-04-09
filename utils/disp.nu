@@ -16,6 +16,7 @@
 module parsers {
 
     # +------------------------------------------------------+ parsers detect ++
+
     def detect [] {
         let display = '^Display\s+(?<display>)'
         let i2cbus = '^\s+I2CBus:\s+(?<i2cbus>)'
@@ -35,6 +36,7 @@ module parsers {
 
 
     # --------------------------------------------------------+ parsers probe ++
+
     def probe [] {
         let feature = '^VCP code 0x(?<vcpfeat>\w+)\s+\((?<description>).+\):\s+(?<value>.+)'
 
@@ -46,6 +48,7 @@ module parsers {
 
 
     # +--------------------------------------------------------+ parsers from ++
+
     export def from [
         subcommand: string
     ]: nothing -> closure {
@@ -57,6 +60,7 @@ module parsers {
 
 
     # +----------------------------------------------------+ parsers as-table ++
+
     export def as-table [
         --drop (-d): list<string>
         --insert (-i): table
@@ -70,6 +74,7 @@ module parsers {
 # ┌──────────────────────────────────────────────────────────────────────┐
 #                                                            main module
 # └──────────────────────────────────────────────────────────────────────┘
+
 # entry point of `disp` cli tool for adjusting monitor specifications and
 # parameters for attached monitors using `ddcutil`
 #
@@ -80,6 +85,7 @@ export def main [] {
 }
 
 # +---------------------------------------------------------------+ disp ddc ++
+
 # @example 'using underlying ddcutil connection to list traceable functions' {
 #     disp ddc 'traceable-functions'
 # } --result (^ddcutil traceable-functions)
@@ -94,6 +100,8 @@ export def --wrapped ddc [
 }
 
 # +--------------------------------------------------------------+ disp info ++
+
+# queries hardware to get info about any attached monitors
 export def --wrapped info [
     ...args: string;
 ]: any -> table {
@@ -103,6 +111,8 @@ export def --wrapped info [
 }
 
 # +--------------------------------------------------------------+ disp list ++
+
+# produces a list of attached monitors
 export def --wrapped list [
     ...args: string
 ]: any -> table {
@@ -115,17 +125,24 @@ export def --wrapped list [
 }
 
 # +--------------------------------------------------------------+ disp find ++
+
+# finds a particular parameter among the collection of availble properties
+# exposed with `ddcutil`
 export def --wrapped find [
     prop?: string
     ...args: string
 ] {}
 
 # +-------------------------------------------------------------+ disp ifind ++
+
+# interactively finds a particular parameter among the collection of available
+# properties exposed with `ddcuit`
 export def --wrapped ifind [
     ...args: string
 ] {}
 
 # +-------------------------------------------------------------+ disp props ++
+
 export def --wrapped props [
     ...args: string
 ] {
@@ -139,6 +156,7 @@ export def --wrapped props [
 
 
 # +-------------------------------------------------------------+ disp param ++
+
 export def --wrapped param [
     ...args: string
 ] {

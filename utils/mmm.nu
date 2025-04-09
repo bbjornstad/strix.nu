@@ -147,7 +147,9 @@ export def param [
     --title-tags: record<pop: list<string>, filter: list<string>>
     --item-separation-quantifier: string = '*'
     --no-anchor-model-at-start
-]: [string -> table<model: string, parameters: string, version: string, quantization: string, type: string> list<string> -> table<model: string, parameters: string, version: string, quantization: string, type: string>] {
+]: [
+    string -> table<model: string, parameters: string, version: string, quantization: string, type: string> list<string> -> table<model: string, parameters: string, version: string, quantization: string, type: string>
+] {
     let pipe = $in
 
     let sections = ['model' 'parameters' 'version' 'quantization']
