@@ -16,3 +16,10 @@ $env.config.hooks.pre_prompt = (
         source hooks/overlays.nu
     )
 )
+
+$env.config.hooks.display_output = (
+    $env.config.hooks.display_output
+    | append (
+        source hooks/last.nu
+    )
+)

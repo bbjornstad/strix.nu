@@ -8,7 +8,7 @@ let completions = ($nu.default-config-dir | path join "completions")
 let core = ($nu.default-config-dir | path join "core")
 let utils = ($nu.default-config-dir | path join "utils")
 let share = ($nu.default-config-dir | path join "share")
-let std = ($nu.default-config-dir | path join "libstd")
+let std = ($nu.default-config-dir | path join "ustd")
 let aliases = ($nu.default-config-dir | path join "aliases")
 $env.NU_LIB_DIRS = [
     $nu.default-config-dir
