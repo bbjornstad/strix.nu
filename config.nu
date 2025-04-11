@@ -520,7 +520,7 @@ $env.config = {
             ]
         }
         display_output: {||
-            if (term size).columns >= 100 { table -e } else { table }
+            table
         }
         # replace with source code to return an error message when a command is
         # not found
@@ -821,6 +821,19 @@ $env.config = {
             keycode: char_g
             mode: [vi_normal vi_insert]
             event: {send: menu name: help_menu}
+        }
+        {
+            name: insert_sudo
+            modifier: shift_control
+            keycode: char_s
+            mode: [emacs vi_insert vi_normal]
+            event: [
+                {edit: MoveToStart}
+                {
+                    send: ExecuteHostCommand
+                    cmd: 'if (commandline | split row -r "\s+" | first) != `sudo` { commandline --insert `sudo `;commandline --cursor-end; }'
+                }
+            ]
         }
     ]
 }
