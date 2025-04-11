@@ -28,7 +28,7 @@ module info {
     }
 }
 
-export module mnt {
+export module mod {
     export def --wrapped main [
         disk: path
         name: string
