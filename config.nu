@@ -328,7 +328,7 @@ $env.config = {
     table: {
         # basic, compact, compact_double, light, thin, with_love, rounded,
         # reinforced, heavy, none, other
-        mode: psql
+        mode: single
         # "always" show indexes, "never" show indexes, "auto" = show indexes
         # when a table has "index" column
         index_mode: auto
@@ -348,7 +348,7 @@ $env.config = {
         help_banner: true
         exit_esc: false
 
-        command_bar_text: 'foreground'
+        command_bar_text: 'background'
 
         status_bar_background: {fg: 'background' bg: 'foreground'}
 
@@ -420,7 +420,7 @@ $env.config = {
         # set this to false to prevent partial filling of the prompt
         partial: true
         # prefix or fuzzy
-        algorithm: "fuzzy"
+        algorithm: "substring"
         external: {
             # set to false to prevent nushell looking into $env.PATH to find
             # more suggestions, `false` recommended for WSL users as this look
@@ -520,7 +520,7 @@ $env.config = {
             ]
         }
         display_output: {||
-            table
+            if (term size).columns >= 100 { table -e } else { table }
         }
         # replace with source code to return an error message when a command is
         # not found
@@ -838,19 +838,6 @@ $env.config = {
     ]
 }
 
-# +------------------------------------------------------------------+ broot ++
-# broot is a file manager, a nice view of a file-tree directly in the terminal
-# with a speedy ui and reasonably simple keybindings. this is supposed to hook
-# up to vim, but so far I'm not there yet.
-
-source ([$CONFIG_DIR "broot" "launcher" "nushell" "br"] | path join)
-
-# +-------------------------------------------------------------------+ yazi ++
-# yazi is another file manager, it is not too dissimilar to broot I think but
-# with some different choices but also implemented using Rust for speed
-
-source ([$CONFIG_DIR "yazi" "launcher" "nushell" "y"] | path join)
-
 # make use of vendor autoload directory capabilities here to offload some of the
 # setup logic to the nushell backend and allow the user to worry less about the
 # execution order of the shell setup
@@ -866,4 +853,21 @@ zoxide init nushell | save -f (
 starship init nu | save -f (
     $nu.data-dir | path join
     'vendor/autoload/starship.nu'
+)
+
+# +------------------------------------------------------------------+ broot ++
+# broot is a file manager, a nice view of a file-tree directly in the terminal
+# with a speedy ui and reasonably simple keybindings. this is supposed to hook
+# up to vim, but so far I'm not there yet.
+
+cp ('~/.config/broot/launcher/nushell/br' | path expand) (
+    $nu.data-dir | path join 'vendor/autoload/broot.nu'
+)
+
+# +-------------------------------------------------------------------+ yazi ++
+# yazi is another file manager, it is not too dissimilar to broot I think but
+# with some different choices but also implemented using Rust for speed
+
+cp ('~/.config/yazi/launcher/nushell/y' | path expand) (
+    $nu.data-dir | path join 'vendor/autoload/yazi.nu'
 )
