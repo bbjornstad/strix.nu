@@ -48,13 +48,16 @@ export def --wrapped edit-at [
     --colorscheme (-c): string@'completes nvim-scheme-registry'
 ]: [directory -> nothing, list<directory> -> nothing, nothing -> nothing] {
     let loc = $in
-    let nubackground = $background | default $env.NIGHTOWL_BACKGROUND
-    let nucolorscheme  = $colorscheme | default $env.NIGHTOWL_COLORSCHEME
+    let nubackground = $background | default $env.NEOSTRIX_BACKGROUND
+    let envname = $'NEOSTRIX_($nubackground | str upcase | str join "_")COLORS'
+    let nucolorscheme  = $colorscheme
+    | default ($env | get $envname)
+
     let location = $loc | default $env.HOME
     with-env {
         PWD: $location
-        NIGHTOWL_BACKGROUND: $nubackground
-        NIGHTOWL_COLORSCHEME: $nucolorscheme
+        NEOSTRIX_BACKGROUND: $nubackground
+        NEOSTRIX_COLORS: $nucolorscheme
     } { $loc | do { || ^nvim $in ...$args } | complete }
 }
 
