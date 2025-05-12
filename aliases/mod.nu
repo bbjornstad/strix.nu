@@ -14,3 +14,6 @@ export module ./nuyay.nu
 export module ./dirlij.nu
 module ./refloorp.nu
 export use refloorp *
+
+module ./kde.nu
+export use kde
