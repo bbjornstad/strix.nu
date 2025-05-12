@@ -17,9 +17,9 @@ $env.config.hooks.pre_prompt = (
     )
 )
 
-$env.config.hooks.display_output = (
-    $env.config.hooks.display_output
-    | append (
-        source hooks/last.nu
-    )
-)
+# $env.config.hooks.display_output = (
+#     $env.config.hooks.display_output
+#     | append (
+#         source hooks/last.nu
+#     )
+# )
