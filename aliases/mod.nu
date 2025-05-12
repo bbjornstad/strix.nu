@@ -1,17 +1,24 @@
 #!/usr/bin/env nu
 # vim: set ft=nu:
 
-export module ./nucd.nu
+module ./nucd.nu
+export use nucd *
 
-export module ./dnvim.nu
+module ./dnvim.nu
+export use dnvim *
 
-export module ./nulsd.nu
+module ./nulsd.nu
+export use nulsd *
 
-export module ./sman.nu
+module ./sman.nu
+export use sman *
 
-export module ./nuyay.nu
+module ./nuyay.nu
+export use nuyay *
 
-export module ./dirlij.nu
+module ./dirlij.nu
+export use dirlij *
+
 module ./refloorp.nu
 export use refloorp *
 
