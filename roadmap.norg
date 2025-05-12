@@ -2,9 +2,9 @@
 title: roadmap
 description: implementation strategy for this nushell configuration.
 authors: ursa-major
-categories:
+categories: todo,roadmap,nushell,dotfiles
 created: 2025-04-08T11:46:58-0700
-updated: 2025-04-08T11:46:58-0700
+updated: 2025-05-18T19:38:05-0700
 version: 1.1.1
 @end
 
@@ -12,23 +12,45 @@ version: 1.1.1
   This document contains a small whishlist of features along with a general
   sense of how to go about implementing them.
 
-  ---
+** Transitioning to JJ
+   `Jujutsu` is a new-era version control system that claims to have improved
+   upon previous models by selecting the most ideal features from past version
+   control softwares (e.g. `git`) in a straightforward though probably
+   opinionated manner.
 
-* Transitioning to JJ
-  `Jujutsu` is a new-era version control system that claims to have improved
-  upon previous models by selecting the most ideal features from past version
-  control softwares (e.g. `git`) in a straightforward though probably
-  opinionated manner.
+   The impetus for this is to become more familiar with this style of working as
+   I think it probably will make me better at keeping my documentations up to
+   snuff.
+*** (x) Create new local repository for nushell files
+*** (x) Move files piecemeal over from previous repository
+    ===
 
-  The impetus for this is to become more familiar with this style of working as
-  I think it probably will make me better at keeping my documentations up to
-  snuff.
-** [ ] Create new local repository for nushell files
-** [ ] Move files piecemeal over from previous repository
-** [ ]  Create new remote repository and add to the local repo's remotes
+** Missing Implementations
+   This section outlines the features that are in a state of partial
+   implementation or that need to be finished in order to be used.
+*** ( ) `genhelp` parse help files
+    structured output that contains information about the usage of the command
+    in question
+*** ( ) `mmm` a model manager
+    for working with, installing, and managing LLMs on the local machine.
+*** ( ) `rsp` iykyk
+*** ( ) `candy` dotcandyd dotfiles manager
+    Finish the initial implementation of this until the final rust version is
+    prepared
+   ***
+    ===
 
-   ---
+** Desired Feature
+   This section outlines features that are desired but not yet implemented, e.g.
+   more of a wishlist than thee previous section.
 
-* `mmm` model manager module
-** TODO: rename to `mm`?
-   This is namely just to make the invocation easier
+   ===
+
+** Cleanup and Restructuring
+   This section outlines necssary steps to clean up the code, the repository,
+   and any assocciated documentation.
+*** ( ) `kctl` a `keychain` extension for nushell that is not used.
+    the reason for this is that the keychain and some associated tooling is
+    better suited to be handled via a shell-agnostic initialization interface;
+    this allows the same keychain parameters to be used
+*** ( ) `ghb` download github binary release files
