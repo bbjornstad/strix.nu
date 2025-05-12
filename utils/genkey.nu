@@ -24,9 +24,9 @@ export def --env "yubikey" [
     --username (-u): string@'completes genkey-complete-username'
     --comment (-C): string
     --filename_override (-f): path
-    --pin-verify (-p)
-    --touch-verify (-T)
-    --use-resident (-r)
+    --no-pin-verify (-p)
+    --no-touch-verify (-T)
+    --no-use-resident (-r)
     --yubikey-env-mapping (-Y): string = ''
 ] {
     let yubikey_mapper = {
@@ -45,7 +45,16 @@ export def --env "yubikey" [
 
     let appstr = $"-O application=ssh:id_($username).($type).($host)-($env.HOSTNAME)"
     let appusr = $"-O user=($username)"
-    let gencmd = $"-t ($type) -O resident ($appusr) ($appstr) -C ($comment)"
+    let commentstr = $"-C ($comment)"
+
+    let use_resident = not ($no_use_resident)
+    let pin_verify = not ($no_use_resident)
+    let touch_verify = not ($no_touch_verify)
+
+    let gencmd = $"-t ($type) ($appusr) ($appstr)"
+
+    let gencmd = if ($use_resident) { [$gencmd "-O resident"] | str join " " } else $gencmd
 
     ^ssh-keygen $gencmd
+    c c
 }
