@@ -37,51 +37,50 @@
 
 export extern keychain [
     ...keys: string
-    --agents: string # credential agents that are targeted, can be either ssh or gpg or a list containing both of these separated with a comma
-    --attempts: int # how many attempts to try before failing to perform action on a key
     --clear # clear out all of the existing keys registered to the targeted agents; typically part of .bash_profile
-    --confhost # search the SSH configuration file for configured SSH hosts and add them automatically
+    --confallhosts # scour SSH configuration file ~/.ssh/config for additional keys referenced as an IdentityFile
     --confirm # key additions are subject to interactive confirmation
     --absolute # arguments to `dir` are taken as absolutes even if the syntax would otherwise indicate something different
+    --debug # print additional debug information
     --dir: directory # set default application directory instead of the default "$HOME/.keychain"
     --query # prints results such that only valid environment variable setting statements are allowed
     --eval # prints results such that the target shell can directly use the output to instantiate keychain
     --env: path # a file containing alternative environment specifications.
+    --extended: string # enables extended key management and specification; see `man keychain`
     --gpg2 # on systems with both gpg and gpg2, use this flag to control which version is being used by the keychain backend.
     --help (-h) # display command help
     --host: string # creation of pidfiles will use this hostname instead of the default system-level hostname
     --ignore-missing # skip any keys that are missing instead of erroring out.
-    --inherit
-    string = "local-once" # set behavior of the keychain instance to one of the valid options (`local`, `local-once`, `any`, `any-once`); see `man keychain`
     --list (-l) # list registered keys for this keychain
     --list-fp (-L) # list registered keys with associated fingerprint
     --lockwait: int # number of seconds to wait to gain lock on card-related mishaps
     --noask # do not ask for confirmation
     --nocolor # print output without color
     --nogui # assume that there is no gui present, effectively overriding pinentry settings
-    --noinherit # do not inherit any behavior from a possible parent.
     --nolock # do not attempt to gain an exclusive lock before executing
+    --query # prints results in KEY=value format
     --stop (-k): string # stop the targeted keychain instances elsewhere
     --systemd # inject variables into systemd environment
+    --ssh-agent-socket: path # use the specified path to a socket file to use instead of the default configuration
+    --ssh-allow-forwarded # set to allow using a forwarded ssh-agent connection
+    --ssh-allow-gpg # set to allow the use of a preexisting gpg-agent connection instead of starting a new ssh-agent
+    --ssh-spawn-ghg # set to allow the keychain to spawn a new gpg-agent in place of the existing ssh-agent that would normally be spawned
+    --ssh-rm (-r): string # remove the specified keys from the keychain; overrides other actions
     --quick (-Q) # minimize input validation and multi-instance lockchecking; has some caveats
     --quiet (-q) # minimize tui output
     --timeout: int # specifies a timeout in number of minutes for the keys added to this isntance of keychain
     --version (-V) # show version information
+    --wipe: string # only perform the action of clearing the keys of the specified type
 ]
 
 export def --wrapped main [
     ...args: string
-    --agents (-a): list<string>
     --fp (-f)
     --quiet (-q)
 ] {
     if not $fp {
         (
             ^keychain
-            --agents (
-                $agents
-                | str join ","
-            )
             --list
             (if $quiet { '--quiet' } else { '' })
             ...$args
@@ -89,10 +88,6 @@ export def --wrapped main [
     } else {
         (
             ^keychain
-            --agents (
-                $agents
-                | str join ","
-            )
             --list-fp
             (if $quiet { '--quiet' } else { '' })
             ...$args
@@ -187,22 +182,17 @@ export def --wrapped keval [
     --gpg-keys (-g): list<string> # ids of gpg keys to add via keychain
     --quiet (-q)
 ] {
-    mut agents = []
     let ssh_keys = $ssh_keys | default []
+    let ssh_keys = $ssh_keys | each {|k| $'sshk:($k)' }
 
     let gpg_keys = $gpg_keys | default []
-    if not ($ssh_keys | is-empty) {
-        $agents = $agents | append "ssh"
-    }
-    if not ($gpg_keys | is-empty) {
-        $agents = $agents | append "gpg"
-    }
-    let agents = $agents
+    let gpg_keys = $gpg_keys | each {|k| $'gpgk:($k)' }
 
     (
-        ^keychain --agents ($agents | str join ",")
+        ^keychain
         (if $quiet { "--quiet" } else { '' })
         ...$args
+        '--extended'
         ...$ssh_keys
         ...$gpg_keys
     )
