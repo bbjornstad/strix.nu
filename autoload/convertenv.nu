@@ -54,5 +54,8 @@ $env.ENV_CONVERSIONS = (
                 | str join (char esep)
             )
         }
+    } | upsert ZELLIJ_AUTO_ATTACH {
+        from_string: {|s| $s | into bool }
+        to_string: {|s| $s | into string }
     }
 )

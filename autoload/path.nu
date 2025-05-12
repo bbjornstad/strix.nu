@@ -27,7 +27,7 @@ let plug_base = ($nu.default-config-dir | path join "plugins")
 $env.NU_PLUGIN_DIRS = $env.NU_PLUGIN_DIRS
 | append [$plug_base]
 
-$env.NUPM_HOME = ($nu.default-config-dir | path join 'nupm st')
+$env.NUPM_HOME = ($nu.default-config-dir | path join 'nupm')
 
 $env.NUPM_REGISTRIES = {
     core: (
